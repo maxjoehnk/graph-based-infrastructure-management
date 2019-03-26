@@ -1,12 +1,12 @@
 import { createExpressServer, useContainer } from 'routing-controllers';
 import { Container } from '../ioc-container';
-import { MetricsController } from './metrics.controller';
+import { ServicesController } from './services.controller';
 
 useContainer(Container);
 
 const server = createExpressServer({
     controllers: [
-        MetricsController
+        ServicesController
     ]
 });
 

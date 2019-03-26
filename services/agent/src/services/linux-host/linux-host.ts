@@ -1,9 +1,10 @@
 import { Inject, Injectable } from '../../ioc-container';
-import { Power } from '../../contracts/power';
+import { Power } from '../../contracts/services/power';
 import { exec } from 'child_process';
-import { Updatable } from '../../contracts/updatable';
+import { Updatable } from '../../contracts/services/updatable';
+import { Token } from 'typedi';
 
-export const UpdaterToken = 'linux-updater';
+export const UpdaterToken = new Token<Updatable>('linux-updater');
 
 @Injectable()
 export class LinuxHostService implements Power, Updatable {
