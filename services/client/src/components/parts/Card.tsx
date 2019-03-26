@@ -12,3 +12,20 @@ export const Card = styled.div`
 `;
 
 export default Card;
+
+export const CardHeader = styled.h2`
+    margin: 0;
+    font-size: 24px;
+    display: flex;
+    flex-direction: row;
+`;
+
+export const CardTitle = styled.span`
+    flex: 1;
+`;
+
+export const FixedWidthCard = styled(Card)`
+    max-width: ${props => props.width}px;
+    width: 100%;
+    background: white;
+`;

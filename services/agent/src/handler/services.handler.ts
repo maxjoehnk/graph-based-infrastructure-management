@@ -6,7 +6,9 @@ export class ServicesHandler {
     constructor(private dockerServiceRegistry: DockerServiceRegistry) {
     }
 
-    list() {
-        return this.dockerServiceRegistry.list();
+    async list() {
+        const services = await this.dockerServiceRegistry.list();
+
+        return await Promise.all(services.map(s => s.toService()));
     }
 }

@@ -2,6 +2,7 @@ import * as Docker from 'dockerode';
 import { Power } from '../contracts/services/power';
 import { Updatable } from '../contracts/services/updatable';
 import { Injectable } from '../ioc-container';
+import { ServiceModel } from '../contracts/viewmodels/service-model';
 
 @Injectable()
 export class DockerServiceRegistry {
@@ -34,5 +35,15 @@ export class DockerService implements Power, Updatable {
 
     update(): Promise<any> {
         throw new Error('Not implemented yet');
+    }
+
+    async toService(): Promise<ServiceModel> {
+        const container = await this.client.getContainer(this.containerId).inspect();
+        return {
+            type: 'docker',
+            id: this.containerId,
+            name: container.Name,
+            image: container.Image
+        };
     }
 }
