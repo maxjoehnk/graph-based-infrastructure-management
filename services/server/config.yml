@@ -1,0 +1,3 @@
+agents:
+  - http://localhost:9001
+database: localhost:9080

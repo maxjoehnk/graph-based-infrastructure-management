@@ -3,16 +3,12 @@ import { CardHeader, CardTitle, FixedWidthCard } from '../parts/Card';
 import { mdiDotsVertical } from '@mdi/js';
 import NodeMetrics from './NodeMetrics';
 import { IconButton } from '../parts/Button';
-
-export enum ServiceStatus {
-    Up,
-    Down
-}
+import { ServiceStatus } from '../../../../contracts/service-status';
 
 export interface ServiceModel {
     title: string;
     icon: string;
-    status: ServiceStatus;
+    status: any;//ServiceStatus;
     metrics: ServiceMetric[];
 }
 
@@ -31,7 +27,7 @@ export interface GraphMetric {
 }
 
 export const Node = ({ node, className }: { className?: string, node: ServiceModel }) => <FixedWidthCard
-    highlight={node.status === ServiceStatus.Up ? 'green' : 'red'} width={300} className={className}>
+    highlight={node.status === 1 ? 'green' : 'red'} width={300} className={className}>
     <CardHeader>
         <CardTitle>
             <IconButton icon={node.icon}/>
