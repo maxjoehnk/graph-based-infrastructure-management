@@ -2,7 +2,12 @@ import { Systeminformation } from 'systeminformation';
 import { ServiceStatus } from '../../../../contracts/service-status';
 import { Metric } from '../services/metrics';
 
-export interface ServiceModel<T> {
+export type DockerServiceModel = BaseServiceModel<DockerServiceMetadata>;
+export type HostServiceModel = BaseServiceModel<HostServiceMetadata>;
+
+export type ServiceModel = DockerServiceModel | HostServiceModel;
+
+export interface BaseServiceModel<T> {
     id: string;
     name: string;
     type: ServiceType;

@@ -7,7 +7,6 @@
     "start": "nodemon --watch 'src/**/*.ts' --exec ts-node src/index.ts"
   },
   "dependencies": {
-    "cors": "^2.8.5",
     "dockerode": "^2.5.8",
     "express": "^4.16.4",
     "reflect-metadata": "^0.1.13",

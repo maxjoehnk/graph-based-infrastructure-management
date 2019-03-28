@@ -1,5 +1,5 @@
 import { Injectable } from '../ioc-container';
-import { DgraphClientStub, DgraphClient, Operation, Mutation } from 'dgraph-js';
+import { DgraphClient, DgraphClientStub, Operation, Txn } from 'dgraph-js';
 import { loadSync } from '../config';
 import * as debug from 'debug';
 
@@ -20,14 +20,15 @@ export class Dgraph {
             .catch(err => console.error(err));
     }
 
-    async insert(data: object[]) {
+    async query<T>(query: string): Promise<T> {
+        const res = await this.client.newTxn().query(query);
+        return res.getJson();
+    }
+
+    async transaction(cb: (txn: Txn) => Promise<void>): Promise<void> {
         const txn = this.client.newTxn();
         try {
-            for (const entry of data) {
-                const mu = new Mutation();
-                mu.setSetJson(entry);
-                await txn.mutate(mu);
-            }
+            await cb(txn);
             await txn.commit();
         }finally {
             await txn.discard();
@@ -37,9 +38,11 @@ export class Dgraph {
     private async buildSchema() {
         d('building schema');
         const schema = `
-            name: string @index(exact) .
+            xid: string @index(exact) .
+            name: string @index(fulltext) .
             type: string .
-            status: int .        
+            status: int .
+            dependencies: uid @reverse .
         `;
         const op = new Operation();
         op.setSchema(schema);

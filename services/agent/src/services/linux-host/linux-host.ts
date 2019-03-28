@@ -5,7 +5,12 @@ import { Updatable } from '../../contracts/services/updatable';
 import { Token } from 'typedi';
 import { cpuCurrentspeed, cpuTemperature, currentLoad, fsSize, getStaticData, mem } from 'systeminformation';
 import { Service } from '../../contracts/services/service';
-import { HostServiceMetadata, ServiceModel, ServiceType } from '../../contracts/viewmodels/service-model';
+import {
+    HostServiceMetadata,
+    HostServiceModel,
+    ServiceModel,
+    ServiceType
+} from '../../contracts/viewmodels/service-model';
 import { Metric } from '../../contracts/services/metrics';
 import { ServiceStatus } from '../../../../contracts/service-status';
 import { HOST_UUID } from '../../consts';
@@ -33,7 +38,7 @@ export class LinuxHostService implements Power, Updatable, Service<HostServiceMe
         return this.updater.update();
     }
 
-    async toService(): Promise<ServiceModel<HostServiceMetadata>> {
+    async toService(): Promise<HostServiceModel> {
         const info = await getStaticData();
         return {
             type: ServiceType.Host,

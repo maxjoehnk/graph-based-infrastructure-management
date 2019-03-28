@@ -5,6 +5,7 @@ import { ServicesController } from './services.controller';
 useContainer(Container);
 
 const server = createExpressServer({
+    cors: true,
     controllers: [
         ServicesController
     ]

@@ -3,13 +3,14 @@ import { CardHeader, CardTitle, FixedWidthCard } from '../parts/Card';
 import { mdiDotsVertical } from '@mdi/js';
 import NodeMetrics from './NodeMetrics';
 import { IconButton } from '../parts/Button';
-import { ServiceStatus } from '../../../../contracts/service-status';
 
 export interface ServiceModel {
+    id: string;
     title: string;
     icon: string;
     status: any;//ServiceStatus;
-    metrics: ServiceMetric[];
+    metrics?: ServiceMetric[];
+    // children: ServiceModel[];
 }
 
 export type ServiceMetric = BarMetric | GraphMetric;

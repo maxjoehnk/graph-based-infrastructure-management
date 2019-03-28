@@ -2,7 +2,7 @@ import * as Docker from 'dockerode';
 import { ContainerInspectInfo } from 'dockerode';
 import { Power } from '../../contracts/services/power';
 import { Updatable } from '../../contracts/services/updatable';
-import { DockerServiceMetadata, ServiceModel, ServiceType } from '../../contracts/viewmodels/service-model';
+import { DockerServiceMetadata, DockerServiceModel, ServiceType } from '../../contracts/viewmodels/service-model';
 import { Service } from '../../contracts/services/service';
 import { ServiceStatus } from '../../../../contracts/service-status';
 import { HOST_UUID } from '../../consts';
@@ -27,7 +27,7 @@ export class DockerService implements Power, Updatable, Service<DockerServiceMet
         throw new Error('Not implemented yet');
     }
 
-    async toService(): Promise<ServiceModel<DockerServiceMetadata>> {
+    async toService(): Promise<DockerServiceModel> {
         const container = await this.client.getContainer(this.containerId).inspect();
         return {
             type: ServiceType.Docker,

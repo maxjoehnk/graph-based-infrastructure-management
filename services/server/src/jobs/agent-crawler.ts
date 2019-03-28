@@ -1,9 +1,10 @@
 import { Injectable } from '../ioc-container';
 import { loadSync } from '../config';
 import { Token } from 'typedi';
-import { Dgraph } from '../data-access/dgraph';
 import * as debug from 'debug';
 import { HttpClient } from '../http-client';
+import { ServiceRepository } from '../repositories/service.repository';
+import { ServiceModel } from '../../../agent/src/contracts/viewmodels/service-model';
 
 const d = debug('gim:server:jobs:agent-crawler');
 
@@ -17,7 +18,7 @@ export interface BackgroundJob {
 export class AgentCrawler implements BackgroundJob {
     private agents = loadSync().agents;
 
-    constructor(private dgraph: Dgraph,
+    constructor(private serviceRepository: ServiceRepository,
                 private http: HttpClient) {
     }
 
@@ -25,8 +26,8 @@ export class AgentCrawler implements BackgroundJob {
     async run() {
         for (const agent of this.agents) {
             d(`crawling ${agent}`);
-            const services = await this.http.get(`${agent}/api/services`);
-            await this.dgraph.insert(services);
+            const services = await this.http.get<ServiceModel[]>(`${agent}/api/services`);
+            await this.serviceRepository.upsert(services);
         }
     }
 }

@@ -8,7 +8,7 @@ export class ServicesController {
     }
 
     @Get()
-    async listServices(): Promise<ServiceModel<any>[]> {
+    async listServices(): Promise<ServiceModel[]> {
         return await this.servicesHandler.list() as any[];
     }
 
