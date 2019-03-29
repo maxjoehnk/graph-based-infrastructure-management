@@ -3,7 +3,8 @@
   "version": "1.0.0",
   "license": "GPL-3.0",
   "scripts": {
-    "start": "parcel src/index.html"
+    "start": "parcel src/index.html",
+    "build": "parcel build src/index.html"
   },
   "dependencies": {
     "@mdi/js": "^3.5.95",
